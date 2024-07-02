@@ -1,0 +1,11 @@
+{
+  level: 'warn',
+  message: 'sql query is :SELECT C.*, U.CompanyId, U.Email, U.FIrstName AS FirstName, U.LastName, U.Password, U.PhoneNo, U.Email, U.LoginName, R.[Description] AS [RoleName],\n' +
+    'CMP.[Name] AS CompanyName\n' +
+    'FROM Client C\n' +
+    'JOIN [Users] U ON C.UserId = U.Id\n' +
+    'JOIN [UserRoles] UR ON U.Id = UR.UserId \n' +
+    'JOIN [Roles] R ON UR.RoleId = R.Id\n' +
+    'LEFT JOIN Company CMP ON R.CompanyId = CMP.Id',
+  metadata: { timestamp: '2024-07-02T07:21:30.962Z' }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "mrs-backend-services-nodejs",
+  "version": "1.0.0",
+  "description": "migrating to node js",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && nodemon dist/index.js",
+    "dev": "npm run transpile:dev && npm run build:dev",
+    "test": "mocha tests/patients.api.spec.js",
+    "build": "tsc --build",
+    "watch:dev": "nodemon",
+    "transpile:dev": "tsc",
+    "build:dev": "node dist/index.js"
+  },
+  "author": "aadvitech solutions",
+  "license": "ISC",
+  "dependencies": {
+    "applicationinsights": "^3.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-winston": "^4.2.0",
+    "mssql": "^11.0.0",
+    "mysql2": "^3.10.1",
+    "sequelize": "^6.37.3",
+    "sequelize-typescript": "^2.1.6",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.8",
+    "@types/sequelize": "^4.28.20",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}
