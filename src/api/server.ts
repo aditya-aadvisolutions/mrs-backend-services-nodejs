@@ -1,12 +1,20 @@
-import express,{ Application } from "express";
+// import express,{ Application, urlencoded } from "express";
+import express from 'express'
 import cors, { CorsOptions } from "cors";
 import MrsConfig from "./configuration/mrs_config";
 import clientRouter from "./routers/client.route";
 import { transports,format } from "winston";
-
+import bodyParser from 'body-parser';
 const winstonExpress = require("express-winston");
+import router from './routers/dashboard.route'
+
 
 var app = express();
+
+app.use(bodyParser.json())
+
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
@@ -20,7 +28,9 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use("/client",clientRouter);
+app.use("/api",router);
+
+
 
 module.exports = app;
 
