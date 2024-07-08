@@ -1,7 +1,7 @@
 
 export interface ApiResult<T>{
-    Data: T | any;
-    IsSuccess: boolean;
-    Message?: string;
+    data: T | any;
+    isSuccess: boolean;
+    message?: string;
 
 }

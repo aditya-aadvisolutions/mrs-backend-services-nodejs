@@ -1,7 +1,6 @@
 import express from 'express';
 import { deleteJob, getJobs, mergeJobs, updateJobStatus } from '../controllers/job.controller';
 import { verifyLogin } from '../controllers/logincontroller';
-import { getJobCount } from '../controllers/dashboardcontroller';
 import { getNotification, saveNotification } from '../controllers/notification.controller';
 //import { getNotification, saveNotification } from "../controller/notificationController";
 //import { verifyLogin, refreshToken } from '../controller/loginController';
@@ -40,12 +39,11 @@ router.post('/Notification/savenotification', saveNotification);
 //Route to handle verifying user login
 router.post('/Login/verifylogin', verifyLogin);
 
-router.get('/dashboard', getJobCount);
 
 //Route to handle referesh token
 //router.post('/refreshtoken', )
 
-//route to handle fetching LookUpUsers
+//route to handle fetching++++++++++++++++++++++++++++++ LookUpUsers
 //router.get('/getuserlookup', getUserLookUp );
 
 //route to handle fetching Lookupstatus

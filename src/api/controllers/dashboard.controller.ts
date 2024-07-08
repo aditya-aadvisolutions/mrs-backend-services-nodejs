@@ -12,8 +12,8 @@ export const getJobCount=async (req: Request, res: Response) =>{
      const resultFromService= await dashboardservices.dashboard(username as string);
     
         const result: ApiResult<any[]>={
-            Data: resultFromService,
-            IsSuccess: true
+            data: resultFromService,
+            isSuccess: true
         }
 
      res.json(result)
@@ -22,9 +22,9 @@ export const getJobCount=async (req: Request, res: Response) =>{
 
 catch(error){
     const result: ApiResult<any>={
-        Data: null,
-        IsSuccess: false,
-        Message: error.message
+        data: null,
+        isSuccess: false,
+        message: error.message
 
     }
     res.status(500).json(result); 
