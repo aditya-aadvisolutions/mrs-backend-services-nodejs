@@ -17,7 +17,7 @@ export class JobService{
                 ToDate: toDate === '' ? null : toDate,
                 InitialLoad: initialLoad ?? null
             };
-            console.log("Executing stored procedure with parameters:", replacements);
+          
 
             const sqlQuery = `exec USP_GetJobs 
                 @JobStatus = :JobStatus,
@@ -33,10 +33,10 @@ export class JobService{
                     type: QueryTypes.RAW
                 });
     
-                console.log("Stored procedure result:", result);
+               
     
                 if (!result || !result[0]) {
-                    console.log("No records returned");
+                   
                     return [];
                 }
     
@@ -131,7 +131,7 @@ export class JobService{
 
     async mergeJobs(jobIds: string, userId: string, createdBy: string, companyId: string){
         try {
-            console.log("Entered Service")
+          
             const replacements={
                 JobIds: jobIds,
                 UserId: userId,
@@ -153,7 +153,7 @@ export class JobService{
 
 
             
-            console.log("stored procedure result: ", result);
+            
        // Access rowsAffected from the result (adjust based on Sequelize result structure)
             
             return {
