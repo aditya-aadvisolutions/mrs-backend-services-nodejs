@@ -22,15 +22,13 @@ export class LoginServices{
             @LoginName = :Username,
             @Password = :Password `;
 
-            console.log("Connecting to Procedure");
-
+            
             const [result] = await MrsDatabase.query(sqlQuery, {
                 replacements: replacements,
                 type: QueryTypes.RAW
             });
             const record=result[0];
 
-            console.log(record ,"result")
             let authClaims;
             if(record){
                  authClaims={
