@@ -12,15 +12,14 @@ import adminfileupload from "./routers/adminFileUpload.route";
 import statuslookup from "./routers/statuslookup.route";
 import jobrouter from "./routers";
 import userlookup from "./routers/userlookup.route";
-=======
-// import express,{ Application, urlencoded } from "express";
-import express from 'express'
+
 //import cors, { CorsOptions } from "cors";
 //import MrsConfig from "./configuration/mrs_config";
 //import clientRouter from "./routers/client.route";
 //import { transports,format } from "winston";
 import router from "./routers";
-import bodyParser from 'body-parser'
+import { getJobCount } from "./controllers/dashboard.controller";
+
 
 
 const winstonExpress = require("express-winston");
@@ -61,6 +60,7 @@ app.use('/api/s3', multipartrouter);
 app.use('/api/Upload', savejobrouter, adminfileupload)
 app.use("/client", clientRouter);
 app.use('/api/Lookup', statuslookup, userlookup)
+app.use('/api/dashboard', getJobCount)
 
 
 app.use("/api",router);
