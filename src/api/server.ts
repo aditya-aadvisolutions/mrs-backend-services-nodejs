@@ -1,4 +1,5 @@
-import express,{ Application } from "express";
+// import express,{ Application, urlencoded } from "express";
+import express from 'express'
 import cors, { CorsOptions } from "cors";
 import MrsConfig from "./configuration/mrs_config";
 import clientRouter from "./routers/client.route";
@@ -7,6 +8,8 @@ import router from "./routers";
 import bodyParser from 'body-parser'
 
 const winstonExpress = require("express-winston");
+import router from './routers/dashboard.route'
+
 
 
 
@@ -17,6 +20,11 @@ app.use(bodyParser.json());
 
 
 app.use(bodyParser.urlencoded({extended: true}))
+
+app.use(bodyParser.json())
+
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
@@ -31,6 +39,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/api",router);
+
 
 module.exports = app;
 
