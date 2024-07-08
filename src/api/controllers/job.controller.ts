@@ -17,7 +17,6 @@ const jobService =new JobService();
             try {
                 const { userId, jobStatus, createdBy, filename, fromDate, toDate, initialLoad } = req.query;
         
-                console.log("API call received with query parameters:", { userId, jobStatus, createdBy, filename, fromDate, toDate, initialLoad });
                 
                 // Fetch jobs using the job service
                 const jobs = await jobService.getJobs(
@@ -30,7 +29,6 @@ const jobService =new JobService();
                     initialLoad === 'true' // Convert initialLoad to boolean
                 );
         
-                console.log("Jobs fetched successfully:", jobs);
         
                 const result: ApiResult<any> = {
                     isSuccess: true,
@@ -120,7 +118,6 @@ export const mergeJobs=async (req: Request, res: Response)=>{
     try {
         const {jobIds, userId, createdBy, companyId}=req.body;
         //Merge job using jobservice
-        console.log("Enetered Controller")
         const resultFromService= await jobService.mergeJobs(jobIds.join(','), userId, createdBy, companyId);
 
         
