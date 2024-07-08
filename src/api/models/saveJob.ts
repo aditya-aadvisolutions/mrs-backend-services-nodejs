@@ -1,17 +1,19 @@
+import { UUID } from "crypto";
+
 export type JobModal = {
-    UploadFiles: JobFileType[];
-    MergeFilename?: string;
-    Tat?: string;
-    Comment?: string;
-    UploadType?: boolean;
-    CompanyId?: string;
-    CreatedBy?: string;
+    uploadfiles: JobFileType[];
+    mergeFilename?: string;
+    tat: string;
+    comment?: string;
+    uploadtype?: boolean;
+    companyId: string;
+    createdBy: string;
 }
 
 export type JobFileType = {
-    FileName: string;
-    FileExtension: string;
-    SourceFilePath: string;
-    CreatedBy: string;
-    FileId: string;
+    filename: string;
+    fileextension: string;
+    filepath: string;
+    fileId: UUID;
+    size: number
 }
