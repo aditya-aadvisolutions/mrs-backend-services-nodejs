@@ -1,6 +1,6 @@
 const {createLogger, format,transports} = require("winston");
 
-const logger = createLogger({
+ export  const logger = createLogger({
     transports:[
         new transports.Console(),
         new transports.File({level: 'warn', filename:'mrswarnlogs'}),
@@ -17,4 +17,4 @@ const logger = createLogger({
     statusLevels:true
 })
 
-module.exports=logger;
+//module.exports={logger};
