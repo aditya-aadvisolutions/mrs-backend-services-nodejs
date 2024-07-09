@@ -1,33 +1,33 @@
 export type clientDto = {
     id:string;
     userId:string;
-    ClientType:string;
-    ClientName:string;
-    FirstName:string;
-    LastName:string;
-    LoginName:string;
-    Password:string,
-    PhoneNo:string;
-    Email:string;
+    clientType:string;
+    clientName:string;
+    firstName:string;
+    lastName:string;
+    loginName:string;
+    password:string,
+    phoneNo:number;
+    email:string;
     RoleName:string;
-    CompanyId:string;
-    CompanyName:string;
+    companyId:string;
+    companyName:string;
     Details:string;
     Website:string;
-    Address1:string;
-    Address2:string;
-    City:string;
-    StateId:string;
+    address1:string;
+    address2:string;
+    city:string;
+    stateId:string;
     CountryId:string;
     DefaultTAT:number;
     FilePreferencePDF:boolean;
     FilePreferenceWord:boolean;
     FilePreferencePDFLink:boolean;
     ClientLogo:string;
-    IsDeleted:string;
-    CreatedBy:string;
-    ModifyedBy:string;
+    isDeleted:string;
+    createdBy:string;
+    modifyedBy:string;
     CreatedDateTime:Date,
     ModifiedDateTime:Date,
-    FilePreference:string;
+    filePreference:string;
 }
