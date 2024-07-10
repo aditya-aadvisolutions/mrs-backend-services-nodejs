@@ -1,110 +1,86 @@
+import { DataTypes, Sequelize } from "sequelize";
 import MrsDatabase from "../../infra/database/mrs_db_connection";
-import Sequelize  from "sequelize";
 
-export const client = MrsDatabase.define("Client",{
-    id:{
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    UserId:{
-        type: Sequelize.STRING
-    },
-    ClientType:{
-        type: Sequelize.STRING 
-    },
-    ClientName:{
-        type: Sequelize.STRING
-    },
-    FirstName:{
-        type: Sequelize.STRING
-    },
-    LastName:{
-        type: Sequelize.STRING
-    },
-    LoginName:{
-        type: Sequelize.STRING
-    },
-    Password:{
-        type: Sequelize.STRING
-    },
-    PhoneNo:{
-        type: Sequelize.STRING
-    },
-    Email:{
-        type: Sequelize.STRING
-    },
-    RoleName:{
-        type: Sequelize.STRING
-    },
-    CompanyId:{
-        type: Sequelize.STRING
-    },
-    CompanyName:{
-        type: Sequelize.STRING
-    },
-    Details:{
-        type: Sequelize.STRING
-    },
-    Website:{
-        type: Sequelize.STRING
-    },
-    Address1:{
-        type: Sequelize.STRING
-    },
-    Address2:{
-        type: Sequelize.STRING
-    },
-    City:{
-        type: Sequelize.STRING
-    },
-    StateId:{
-        type: Sequelize.STRING
-    },
-    CountryId:{
-        type: Sequelize.STRING
-    },
-    DefaultTAT:{
-        type: Sequelize.STRING
-    },
-    FilePreferencePDF:{
-        type: Sequelize.BOOLEAN
-    },
-    FilePreferenceWord:{
-        type: Sequelize.BOOLEAN
-    },
-    FilePreferencePDFLink:{
-        type: Sequelize.BOOLEAN
-    },
-    ClientLogo:{
-        type: Sequelize.STRING
-    },
-    IsDeleted:{
-        type: Sequelize.BOOLEAN
-    },
-    CreatedBy:{
-        type: Sequelize.STRING
-    },
-    ModifyedBy:{
-        type: Sequelize.STRING
-    },
-    CreatedDateTime:{
-        type: Sequelize.DATE
-    },
-    ModifiedDateTime:{
-        type: Sequelize.DATE,
-        allowNull: true,
-        defaultValue: Sequelize.NOW,
-    },
-    FilePreference:{
-        type: Sequelize.STRING
-    }
-   
-
-},
-    {
-        
-            freezeTableName: true,
-        
-    }
-)
+export const client = MrsDatabase.define("Client", {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  UserId: {
+    type: DataTypes.STRING,
+  },
+  ClientType: {
+    type: DataTypes.STRING,
+  },
+  ClientName: {
+    type: DataTypes.STRING,
+  },
+  Details: {
+    type: DataTypes.STRING,
+  },
+  Website: {
+    type: DataTypes.STRING,
+  },
+  Address1: {
+    type: DataTypes.STRING,
+  },
+  Address2: {
+    type: DataTypes.STRING,
+  },
+  City: {
+    type: DataTypes.STRING,
+  },
+  StateId: {
+    type: DataTypes.STRING,
+  },
+  CountryId: {
+    type: DataTypes.STRING,
+  },
+  DefaultTAT: {
+    type: DataTypes.STRING,
+    defaultValue: false,
+  },
+  FilePreferencePDF: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  FilePreferenceWord: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  FilePreferencePDFLink: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  ClientLogo: {
+    type: DataTypes.STRING,
+  },
+  IsDeleted: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  CreatedBy: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  ModifyedBy: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  CreatedDateTime: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('GETDATE()')
+  },
+  ModifiedDateTime: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  FilePreference: {
+    type: DataTypes.STRING,
+  },
+}, {
+    tableName: 'Client',
+    timestamps: false // Disable the automatic `createdAt` and `updatedAt` fields
+  });

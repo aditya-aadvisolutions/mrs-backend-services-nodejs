@@ -58,7 +58,7 @@ app.use(cors(corsOptions));
 app.use('/api', jobrouter)
 app.use('/api/s3', multipartrouter);
 app.use('/api/Upload', savejobrouter, adminfileupload)
-app.use("/client", clientRouter);
+app.use("/api/client", clientRouter);
 app.use('/api/Lookup', statuslookup, userlookup)
 app.use('/api/dashboard', getJobCount)
 

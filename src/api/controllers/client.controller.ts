@@ -23,4 +23,17 @@ export class ClientController{
           }
     }
 
+    createClient = async (req:Request,res:Response)=>{
+        const clientDto = req.body;
+        console.log(clientDto,"body")
+         const client = await this.clientService.createClient(clientDto);
+        if (client.isSucess == true) {
+          res.status(200).json(client);
+          res.statusMessage = "client created";
+          } else {
+            res.statusMessage = "Unable to register client";
+            res.status(404).json(client);
+         }
+    }
+
 }
