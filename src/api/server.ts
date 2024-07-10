@@ -10,23 +10,13 @@ import multer from 'multer';
 import savejobrouter from "./routers/saveJob.route";
 import adminfileupload from "./routers/adminFileUpload.route";
 import statuslookup from "./routers/statuslookup.route";
-import jobrouter from "./routers";
+import jobrouter from "./routers/jobs.route";
 import userlookup from "./routers/userlookup.route";
-
-//import cors, { CorsOptions } from "cors";
-//import MrsConfig from "./configuration/mrs_config";
-//import clientRouter from "./routers/client.route";
-//import { transports,format } from "winston";
-import router from "./routers";
-import { getJobCount } from "./controllers/dashboard.controller";
-
-
+import notification from "./routers/notification.route";
+import userroute from "./routers/users.route";
+import dashboardroute from "./routers/dashboard.route";
 
 const winstonExpress = require("express-winston");
-
-
-
-
 
 const app=express();
 
@@ -55,15 +45,15 @@ const upload = multer();
 app.use(upload.none());
 app.use(cors(corsOptions));
 
-app.use('/api', jobrouter)
+app.use('/api/Job', jobrouter)
 app.use('/api/s3', multipartrouter);
 app.use('/api/Upload', savejobrouter, adminfileupload)
 app.use("/api/client", clientRouter);
 app.use('/api/Lookup', statuslookup, userlookup)
-app.use('/api/dashboard', getJobCount)
+app.use('/api', dashboardroute)
+app.use('/api/Notification', notification)
+app.use('/api/Login', userroute)
 
-
-app.use("/api",router);
 
 
 

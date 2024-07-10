@@ -2,7 +2,10 @@ import MrsDatabase from "../../infra/database/mrs_db_connection";
 import { AdminFileUpload, UploadFileModal } from "../models/adminFileUpload";
 import AdminSaveUploadFileService from "../services/adminFileUpload.service";
 import { Request, Response } from "express";
-import { PDFDocument } from 'pdf-lib';
+import { PageCount } from "../../utils/pagecount";
+import path from 'path';
+
+const pageCountObj = new PageCount();
 
 export class AdminFileUploadController {
   private adminService: AdminSaveUploadFileService;
@@ -21,28 +24,26 @@ export class AdminFileUploadController {
         throw new Error('UploadFiles should be an array');
       }
 
-
       const parsedJobFiles: UploadFileModal[] = await Promise.all(
-        UploadFiles.map(async (file: any) => {
-          const pdfBuffer = file.buffer;
-          let pageCount = 0;
-
-          if (file.fileextension === 'pdf') {
-            const pdf = await PDFDocument.load(pdfBuffer);
-            pageCount = pdf.getPageCount();
-          }
-
-          return {
-            filename: file.filename,
-            fileextension: file.fileextension,
-            filepath: file.filepath,
-            size: file.size,
-            fileId: file.fileId,
-            pageCount,
-          } as UploadFileModal;
-        })
+        UploadFiles.map(async (file: any) => ({
+          filename: file.filename,
+          fileextension: file.fileextension,
+          filepath: file.filepath,
+          size: file.size,
+          fileId: file.fileId,
+          pageCount: file.pageCount,
+        }))
       );
+/*
+      // Get page count for uploaded files
+      await pageCountObj.getPageCountForUploadFiles(parsedJobFiles, path.join(__dirname, 'temp'));
 
+      // Console log the file details along with page count
+      parsedJobFiles.forEach(file => {
+        console.log(`File ID: ${file.fileId}, Filename: ${file.filename}, Page Count: ${file.pageCount}`);
+      });
+
+*/
       const jobData: AdminFileUpload = {
         jobId,
         createdBy,
@@ -61,5 +62,4 @@ export class AdminFileUploadController {
       res.status(500).json(result);
     }
   };
-
 }

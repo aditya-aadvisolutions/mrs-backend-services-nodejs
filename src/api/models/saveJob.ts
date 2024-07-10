@@ -8,6 +8,7 @@ export type JobModal = {
     uploadtype?: boolean;
     companyId: string;
     createdBy: string;
+    
 }
 
 export type JobFileType = {
@@ -15,5 +16,6 @@ export type JobFileType = {
     fileextension: string;
     filepath: string;
     fileId: UUID;
-    size: number
+    size: number;
+    pageCount: number;
 }

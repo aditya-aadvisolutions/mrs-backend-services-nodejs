@@ -1,6 +1,11 @@
-import { getJobCount } from "../controllers/dashboard.controller";
+import express from 'express';
+import { getJobCount } from '../controllers/dashboard.controller';
 
-const app=require ('express').Router();
-app.get('/dashboard',getJobCount)
+const dashboardroute=express.Router();
 
-export default app;
+
+
+//Route to handle verifying user login
+dashboardroute.get('/dashboard', getJobCount);
+
+export default dashboardroute;
