@@ -1,10 +1,6 @@
 import express from 'express';
 import { deleteJob, getJobs, mergeJobs, updateJobStatus } from '../controllers/job.controller';
-import { verifyLogin } from '../controllers/logincontroller';
-import { getNotification, saveNotification } from '../controllers/notification.controller';
-//import { getNotification, saveNotification } from "../controller/notificationController";
-//import { verifyLogin, refreshToken } from '../controller/loginController';
-//import {getUserLookUp, getStatusLookUp} from '../controller/lookupController'
+
 
 const jobrouter=express.Router();
 

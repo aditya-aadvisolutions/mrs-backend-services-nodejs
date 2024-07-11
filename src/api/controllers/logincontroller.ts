@@ -6,7 +6,7 @@ import jwt, {JwtPayLoad, Secret} from 'jsonwebtoken';
 import crypto from 'crypto';
 import {User} from '../models/user';
 import AesEncryption from '../../utils/aesencryption'
-
+import { encryptData } from '../configuration/auth';
 
 
 const loginService= new LoginServices();
@@ -14,11 +14,9 @@ const loginService= new LoginServices();
 export const verifyLogin=async (req: Request, res: Response) =>{
     const {username, password}=req.body;
 
-   // const encryptedPassword= AesEncryption.encrypt(password);
-    
-
+   const encryptedPassword= await encryptData(password);
    try{
-     const userInfo: any= await loginService.verifyLogin(username, password);
+     const userInfo: any= await loginService.verifyLogin(username, encryptedPassword);
      //console.log(encryptedPassword,"EncryptedPassword")
 
         const result: ApiResult<any[]>={
