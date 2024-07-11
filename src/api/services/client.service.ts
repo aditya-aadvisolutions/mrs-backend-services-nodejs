@@ -6,9 +6,8 @@ import { Logger } from "winston";
 import { Users } from "../../domain/entities/user.entity";
 import {Roles} from "../../domain/entities/Roles.entity";
 import {UserRoles} from "../../domain/entities/UserRoles.entity";
-import bcrypt from 'bcrypt';
 import moment from 'moment';
-
+import { encryptData } from "../configuration/auth";
 
 export class ClientService {
     log: Logger;
@@ -38,7 +37,7 @@ export class ClientService {
 
         try {
             const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(clientDto.password, saltRounds);
+            const hashedPassword = await encryptData(clientDto.password);
             let FilePreferencePDF = false;
             let FilePreferenceWord = false;
             let FilePreferencePDFLink = false;
