@@ -41,13 +41,13 @@ export class ClientService {
             let FilePreferencePDF = false;
             let FilePreferenceWord = false;
             let FilePreferencePDFLink = false;
-            if (clientDto.filePreference.includes('pdf')) {
+            if (clientDto.filePreference.includes('.pdf')) {
                 FilePreferencePDF = true;
             }
-            if (clientDto.filePreference.includes('doc')) {
+            if (clientDto.filePreference.includes('.docx')) {
                 FilePreferenceWord = true;
             }
-            if (clientDto.filePreference.includes('link')) {
+            if (clientDto.filePreference.includes('.pdflnk')) {
                 FilePreferencePDFLink = true;
             }
             const companyId = literal(`'${clientDto.companyId}'`);
