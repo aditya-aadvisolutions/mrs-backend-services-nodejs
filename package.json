@@ -6,7 +6,6 @@
   "scripts": {
     "start": "tsc && nodemon dist/index.js",
     "dev": "npm run transpile:dev && npm run build:dev",
-    "test": "mocha tests/patients.api.spec.js",
     "build": "tsc --build",
     "watch:dev": "nodemon",
     "transpile:dev": "tsc",

@@ -2,11 +2,6 @@ var server = require('./api/server');
 import MrsConfig from "./api/configuration/mrs_config";
 import MrsDatabase from "./infra/database/mrs_db_connection";
 
-
-
-
-
-
 MrsDatabase
     .authenticate()
     .then(()=>{
