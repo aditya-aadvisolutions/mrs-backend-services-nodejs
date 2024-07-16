@@ -53,4 +53,4 @@ jobs:
           app-name: 'mrs-app-services'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CD4E8B59FC4A4DBBB3F3FBA926BBE9DB }}
+          publish-profile: ${{ mrs_app_services }}
