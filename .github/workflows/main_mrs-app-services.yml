@@ -21,10 +21,6 @@ jobs:
         with:
           node-version: '20.x'
           
-      - name: Increase file descriptor limit
-        run: |
-          unlimit -n 4096
-          
       - name: npm install
         run: |
           npm install
@@ -50,9 +46,6 @@ jobs:
         with:
           name: node-app
 
-      - name: Increase file descriptor limit
-        run: |
-          unlimit -n 4096
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
