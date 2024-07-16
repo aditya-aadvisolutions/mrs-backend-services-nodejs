@@ -53,4 +53,4 @@ jobs:
           app-name: 'mrs-app-services'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ mrs_app_services }}
+          publish-profile: ${{ secrets.mrs_app_services }}
