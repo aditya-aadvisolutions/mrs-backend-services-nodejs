@@ -23,7 +23,7 @@ jobs:
           
       - name: Increase file descriptor limit
         run: |
-          ulimit -n 4096
+          unlimit -n 4096
           
       - name: npm install
         run: |
@@ -52,7 +52,7 @@ jobs:
 
       - name: Increase file descriptor limit
         run: |
-          ulimit -n 4096
+          unlimit -n 4096
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
