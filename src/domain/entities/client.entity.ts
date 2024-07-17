@@ -1,5 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize";
 import MrsDatabase from "../../infra/database/mrs_db_connection";
+import { Users } from "./user.entity";
 
 export const client = MrsDatabase.define("Client", {
   id: {
@@ -80,7 +81,18 @@ export const client = MrsDatabase.define("Client", {
   FilePreference: {
     type: DataTypes.STRING,
   },
+  State: {
+    type: DataTypes.STRING,
+  },
+  Country: {
+    type: DataTypes.STRING,
+  },
 }, {
     tableName: 'Client',
     timestamps: false // Disable the automatic `createdAt` and `updatedAt` fields
   });
+
+  client.belongsTo(Users, {
+    foreignKey: 'UserId',
+    targetKey: 'id'
+  })
