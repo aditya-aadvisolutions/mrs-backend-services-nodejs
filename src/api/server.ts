@@ -17,34 +17,21 @@ import userroute from "./routers/users.route";
 import dashboardroute from "./routers/dashboard.route";
 
 const winstonExpress = require("express-winston");
-
 const app=express();
 
 app.use(bodyParser.json());
-
-
-
 app.use(bodyParser.urlencoded({extended: true}))
-
-app.use(bodyParser.json())
-
-// app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-var corsOptions = {
-    //origin: MrsConfig.cors.allowedOrigins,
-    origin: '*',
-    methods: MrsConfig.cors.allowedMethods,
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-}
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// var corsOptions = {
+//     origin: MrsConfig.cors.allowedOrigins,
+//     //origin: '*',
+//     methods: MrsConfig.cors.allowedMethods,
+//     preflightContinue: false,
+//     optionsSuccessStatus: 204
+// }
 const upload = multer();
 app.use(upload.none());
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use('/api/Job', jobrouter)
 app.use('/api/s3', multipartrouter);
