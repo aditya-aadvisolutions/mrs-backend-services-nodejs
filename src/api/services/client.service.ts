@@ -1,7 +1,7 @@
 import { QueryTypes, literal } from "sequelize";
 import { client } from "../../domain/entities/client.entity";
 import MrsDatabase from "../../infra/database/mrs_db_connection";
-import { clientDto } from "../models/client";
+import { clientDto, updateClientDto } from "../models/client";
 import { Logger } from "winston";
 import { Users } from "../../domain/entities/user.entity";
 import {Roles} from "../../domain/entities/Roles.entity";
@@ -64,7 +64,7 @@ export class ClientService {
             const newUser = await Users.create({
                 FirstName: clientDto.firstName,
                 LastName: clientDto.lastName,
-                LoginName: clientDto.firstName,
+                LoginName: clientDto.loginName,
                 Password: hashedPassword, 
                 Email: clientDto.email,
                 PhoneNo: clientDto.phoneNo,
@@ -75,10 +75,12 @@ export class ClientService {
             const newClient = await client.create({
                 UserId: newUser.dataValues.id,
                 ClientType: 'client',
-                ClientName: clientDto.firstName,
+                ClientName: clientDto.loginName,
                 Details: 'details',
                 Address1: clientDto.address1,
                 Address2: clientDto.address2,
+                State: clientDto.state,
+                Country: clientDto.country,
                 City: clientDto.city,
                 CreatedBy: createdBy,
                 FilePreferencePDF: FilePreferencePDF,
@@ -109,5 +111,83 @@ export class ClientService {
                 isSucess: false
             };
         }
+    }
+
+    
+
+
+    async updateClient(clientDto: updateClientDto) {
+        const dbtrans = await MrsDatabase.transaction();
+
+        try {
+            let FilePreferencePDF = false;
+            let FilePreferenceWord = false;
+            let FilePreferencePDFLink = false;
+            if (clientDto.filePreference.includes('.pdf')) {
+                FilePreferencePDF = true;
+            }
+            if (clientDto.filePreference.includes('.docx')) {
+                FilePreferenceWord = true;
+            }
+            if (clientDto.filePreference.includes('.pdflnk')) {
+                FilePreferencePDFLink = true;
+            }
+             const modifyedBy = literal(`'${clientDto.modifyedBy}'`);
+
+            const userUpdateData = {
+                FirstName: clientDto.firstName,
+                LastName: clientDto.lastName,
+                LoginName: clientDto.loginName,
+                Email: clientDto.email,
+                PhoneNo: clientDto.phoneNo,
+            };
+
+            const clientUpdateData = {
+                ClientName: clientDto.loginName,
+                Address1: clientDto.address1,
+                Address2: clientDto.address2,
+                State: clientDto.state,
+                Country: clientDto.country,
+                City: clientDto.city,
+                ModifyedBy: modifyedBy,
+                FilePreferencePDF: FilePreferencePDF,
+                FilePreferenceWord: FilePreferenceWord,
+                FilePreferencePDFLink: FilePreferencePDFLink,
+                FilePreference: clientDto.filePreference.toString(),
+            };
+
+            await Users.update(userUpdateData, { where: { Id: clientDto.userId }, transaction: dbtrans });
+            await client.update(clientUpdateData, { where: { UserId: clientDto.userId }, transaction: dbtrans });
+
+            await dbtrans.commit();
+            return {
+                isSucess: true
+            };
+        } catch (error) {
+            console.error(error);
+
+            if (dbtrans) {
+                await dbtrans.rollback();
+            }
+
+            return {
+                isSucess: false
+            };
+        }
+    }
+
+    
+     async getInvidualClient (userId: string) {
+        try{
+            const clientdata = await client.findOne({
+                where: { UserId: userId },  // Use where to filter by UserId
+                include: [Users]  // Include associated Users
+            });
+            return clientdata;
+        }catch(error){
+            console.log(error);
+            throw new Error(error);
+        }
+      
     }
 }
