@@ -34,7 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 var corsOptions = {
-    origin: MrsConfig.cors.allowedOrigins,
+    //origin: MrsConfig.cors.allowedOrigins,
+    origin: '*',
     methods: MrsConfig.cors.allowedMethods,
     preflightContinue: false,
     optionsSuccessStatus: 204
