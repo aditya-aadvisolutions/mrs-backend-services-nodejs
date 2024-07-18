@@ -13,7 +13,7 @@ class AdminSaveUploadFileService {
       const jobFilesParameter = this.createTableValuedParameter(jobData.UploadFiles, jobData.createdBy, jobData.jobId);
 
       const sqlQuery = `
-        DECLARE @JobFiles JobFiletype;
+        DECLARE @JobFiles JobFiletype1;
 
         INSERT INTO @JobFiles ([FileName], [FileExtension], [SourceFilePath], [CreatedBy], [FileId])
         VALUES ${jobFilesParameter.map(() => '(?, ?, ?, ?, ?)').join(', ')};
