@@ -6,7 +6,7 @@ const { NODE_ENV, PORT, SECRET_KEY, SECRET_IV, ECNRYPTION_METHOD } = process.env
 
 export default {
   env: NODE_ENV,
-  port: PORT,
+  port: PORT || 3000,
   secret_key: SECRET_KEY,
   secret_iv: SECRET_IV,
   ecnryption_method: ECNRYPTION_METHOD,
