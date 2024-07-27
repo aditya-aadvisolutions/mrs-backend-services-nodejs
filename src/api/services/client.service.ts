@@ -149,7 +149,7 @@ export class ClientService {
                 State: clientDto.state,
                 Country: clientDto.country,
                 City: clientDto.city,
-                ModifyedBy: modifyedBy,
+                ModifyedBy: modifyedBy || null,
                 FilePreferencePDF: FilePreferencePDF,
                 FilePreferenceWord: FilePreferenceWord,
                 FilePreferencePDFLink: FilePreferencePDFLink,
