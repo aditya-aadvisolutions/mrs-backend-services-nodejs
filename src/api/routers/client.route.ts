@@ -5,7 +5,6 @@ const clientRouter = express.Router();
 
 const clientController = new ClientController();
 
-console.info("inside clientcontroller");
 clientRouter.get('/GetClients',clientController.getClients);
 clientRouter.post('/register',clientController.createClient);
 clientRouter.get('/clientdata',clientController.getInvidualClient);
