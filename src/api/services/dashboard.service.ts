@@ -22,7 +22,8 @@ export class DashboardServices{
             const count: Dashboard<any> ={
                 PendingJobsCount: record.PendingJobsCount,
                 CompletedJobsCount: record.CompletedJobsCount,
-                ClientsCount: record.ClientCount
+                ClientsCount: record.ClientCount,
+                EmployeesCount: record.EmployeesCount,
 
             }
             return count;
