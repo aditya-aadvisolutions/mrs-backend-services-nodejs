@@ -14,6 +14,7 @@ import jobrouter from "./routers/jobs.route";
 import userlookup from "./routers/userlookup.route";
 import notification from "./routers/notification.route";
 import userroute from "./routers/users.route";
+import employeerouter from "./routers/employee.route";
 import dashboardroute from "./routers/dashboard.route";
 
 const winstonExpress = require("express-winston");
@@ -54,6 +55,7 @@ app.use('/api/Lookup', statuslookup, userlookup)
 app.use('/api', dashboardroute)
 app.use('/api/Notification', notification)
 app.use('/api/Login', userroute)
+app.use('/api/employee',employeerouter)
 
 
 
