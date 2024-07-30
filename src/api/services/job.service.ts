@@ -5,21 +5,22 @@ import MrsDatabase from "../../infra/database/mrs_db_connection";
 
 export class JobService{
     
-    async getJobs(userId: string, jobStatus?:string, createdBy?:string, filename?:string, fromDate?: string, toDate?: string,  initialLoad?: boolean): Promise<Job[]>{
+    async getJobs(userId: string, jobStatus?:string, createdBy?:string, filename?:string, jobId?: string, fromDate?: string, toDate?: string,  initialLoad?: boolean): Promise<Job[]>{
         try {
 
             const replacements = {
-                JobStatus: jobStatus === '' ? null : jobStatus ,
-                CreatedBy: createdBy === '' ? null: createdBy,
+                JobId: jobId || null,
+                JobStatus: jobStatus || null,
+                CreatedBy: createdBy || null,
                 UserId: userId,
-                Filename: filename === '' ? null :filename,
-                FromDate: fromDate === '' ? null : fromDate,
-                ToDate: toDate === '' ? null : toDate,
+                Filename: filename || null,
+                FromDate: fromDate || null,
+                ToDate: toDate || null,
                 InitialLoad: initialLoad ?? null
             };
-          
 
-            const sqlQuery = `exec USP_GetJobs 
+            const sqlQuery = `EXEC USP_GetJobs3 
+                @JobId = :JobId,
                 @JobStatus = :JobStatus,
                 @CreatedBy = :CreatedBy, 
                 @UserId = :UserId, 
