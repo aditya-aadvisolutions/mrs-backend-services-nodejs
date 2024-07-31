@@ -15,8 +15,8 @@ const jobService =new JobService();
 
         export const getJobs = async (req: Request, res: Response) => {
             try {
-                const { userId, jobStatus, createdBy, filename, fromDate, toDate, initialLoad } = req.query;
-        
+                const { userId, jobStatus, createdBy, filename, jobId, fromDate, toDate, initialLoad } = req.query;
+                console. log("data from front end",req.query)
                 
                 // Fetch jobs using the job service
                 const jobs = await jobService.getJobs(
@@ -24,6 +24,7 @@ const jobService =new JobService();
                     jobStatus as string,
                     createdBy as string,     
                     filename as string,
+                    jobId as string,
                     fromDate as string,
                     toDate as string,
                     initialLoad === 'true' // Convert initialLoad to boolean
