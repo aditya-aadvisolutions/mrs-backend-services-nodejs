@@ -52,6 +52,11 @@ export const Users = MrsDatabase.define('Users', {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: Sequelize.literal('GETDATE()')
+  },
+  IsActive: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 }, {
   timestamps: false // Disable the automatic `createdAt` and `updatedAt` fields
