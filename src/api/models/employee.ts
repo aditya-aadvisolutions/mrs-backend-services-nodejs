@@ -1,4 +1,5 @@
 export type employeeDto = {
+    isActive: any;
     id:string;
     userId:string;
     clientType:string;
