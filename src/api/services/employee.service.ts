@@ -54,6 +54,8 @@ export default class EmployeeService {
                 Country: employeeDto.country,
                 City: employeeDto.city,
                 CreatedBy: createdBy,
+                Role: employeeDto.role,
+                Manager:employeeDto.manager
             }, { transaction: dbtrans });
             console.log(newUser.dataValues, 'newUser.dataValues.id')
             const newrole = await UserRoles.create({
