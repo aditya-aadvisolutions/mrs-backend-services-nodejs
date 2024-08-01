@@ -59,6 +59,14 @@ export const Employee = MrsDatabase.define('Employees', {
         type: DataTypes.DATE,
         allowNull: true,
       },
+      Manager:{
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Role:{
+        type: DataTypes.STRING,
+        allowNull: true,
+      }
      
 }, {
     tableName: 'Employees',
