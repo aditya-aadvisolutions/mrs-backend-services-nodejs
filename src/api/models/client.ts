@@ -53,6 +53,7 @@ export type updateClientDto = {
     address1:string;
     address2:string;
     city:string;
+    isActive:string;
     state:string;
     country:string;
     DefaultTAT:number;
