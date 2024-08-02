@@ -140,6 +140,7 @@ export class ClientService {
                 LoginName: clientDto.loginName,
                 Email: clientDto.email,
                 PhoneNo: clientDto.phoneNo,
+                IsActive: clientDto.isActive,
             };
 
             const clientUpdateData = {
@@ -154,6 +155,7 @@ export class ClientService {
                 FilePreferenceWord: FilePreferenceWord,
                 FilePreferencePDFLink: FilePreferencePDFLink,
                 FilePreference: clientDto.filePreference.toString(),
+                IsActive: clientDto.isActive,
             };
 
             await Users.update(userUpdateData, { where: { Id: clientDto.userId }, transaction: dbtrans });

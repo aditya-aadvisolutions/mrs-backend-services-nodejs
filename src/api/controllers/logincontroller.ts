@@ -25,7 +25,7 @@ export const verifyLogin=async (req: Request, res: Response) =>{
             message: null
         }
 
-     res.json(result)
+     res.json(userInfo)
 
     }
 catch(error){

@@ -87,6 +87,11 @@ export const client = MrsDatabase.define("Client", {
   Country: {
     type: DataTypes.STRING,
   },
+  IsActive: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  }
 }, {
     tableName: 'Client',
     timestamps: false // Disable the automatic `createdAt` and `updatedAt` fields
