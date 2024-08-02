@@ -59,6 +59,19 @@ export const Employee = MrsDatabase.define('Employees', {
         type: DataTypes.DATE,
         allowNull: true,
       },
+      Manager:{
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Role:{
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      IsActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      }
      
 }, {
     tableName: 'Employees',
@@ -68,5 +81,5 @@ export const Employee = MrsDatabase.define('Employees', {
   Employee.belongsTo(Users, {
     foreignKey: 'UserId',
     targetKey: 'id',
-    as: 'Users' // Alias for inclusion
+   // as: 'Users' // Alias for inclusion
 });

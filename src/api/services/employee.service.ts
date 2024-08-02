@@ -54,6 +54,8 @@ export default class EmployeeService {
                 Country: employeeDto.country,
                 City: employeeDto.city,
                 CreatedBy: createdBy,
+                Role: employeeDto.role,
+                Manager:employeeDto.manager
             }, { transaction: dbtrans });
             console.log(newUser.dataValues, 'newUser.dataValues.id')
             const newrole = await UserRoles.create({
@@ -91,4 +93,69 @@ export default class EmployeeService {
             throw err; // rethrow the error to handle it in the calling function
         }
     }
+    async  updateEmployee(employeeDto: employeeDto) {
+        const dbtrans = await MrsDatabase.transaction();
+        try {
+            const modifyedBy = literal(`'${employeeDto.modifyedBy}'`);
+            const userUpdateData = {
+                FirstName: employeeDto.firstName,
+                LastName: employeeDto.lastName,
+                Email: employeeDto.email,
+                LoginName: employeeDto.loginName,
+                PhoneNo: employeeDto.phoneNo,
+                ModifiedBy: modifyedBy,
+                IsActive: employeeDto.isActive,
+            }
+
+            const employeeUpdateData = {
+                EmployeeName: employeeDto.loginName,
+                Address1: employeeDto.address1,
+                Address2: employeeDto.address2,
+                State: employeeDto.state,
+                Country: employeeDto.country,
+                City: employeeDto.city,
+                ModifiedBy: modifyedBy,
+                IsActive: employeeDto.isActive,
+                Manager:employeeDto.manager,
+                Role:employeeDto.role
+            }
+           
+            await Users.update(userUpdateData, {
+                where: { Id: employeeDto.userId },
+                transaction: dbtrans
+            })
+            await Employee.update(employeeUpdateData, {
+                where: { UserId: employeeDto.userId },
+                transaction: dbtrans
+            })
+            await dbtrans.commit();
+            return {
+                isSucess: true
+            };
+        } catch (error) {
+            console.error(error); 
+            if (dbtrans) {
+                await dbtrans.rollback();
+            }
+
+            return {
+                isSucess: false
+            };
+        }
+    }
+    async  getEmployeeDetails(id: any) {
+        try {
+            const results = await Employee.findOne({
+                where: { UserId: id },  // Use where to filter by UserId
+                include: [Users] 
+            })
+            console.log('Results:', results);
+            return results;
+        } catch (err) { 
+            console.error(err);
+            throw err; // rethrow the error to handle it in the calling function
+        }
+    }
+    
 }
+

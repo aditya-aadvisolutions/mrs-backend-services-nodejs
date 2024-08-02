@@ -5,22 +5,19 @@ import MrsDatabase from "../../infra/database/mrs_db_connection";
 
 export class JobService{
     
-    async getJobs(userId: string, jobStatus?:string, createdBy?:string, filename?:string, jobId?: string, fromDate?: string, toDate?: string,  initialLoad?: boolean): Promise<Job[]>{
+    async getJobs(userId, jobStatus = null, createdBy = null, filename = null, fromDate = null, toDate = null, initialLoad = false) {
         try {
-
             const replacements = {
-                JobId: jobId || null,
-                JobStatus: jobStatus || null,
-                CreatedBy: createdBy || null,
+                JobStatus: jobStatus === '' ? null : jobStatus,
+                CreatedBy: createdBy === '' ? null : createdBy,
                 UserId: userId,
-                Filename: filename || null,
-                FromDate: fromDate || null,
-                ToDate: toDate || null,
-                InitialLoad: initialLoad ?? null
+                Filename: filename === '' ? null : filename,
+                FromDate: fromDate === '' ? null : fromDate,
+                ToDate: toDate === '' ? null : toDate,
+                InitialLoad: initialLoad === true ? 'true' : 'false'
             };
-
-            const sqlQuery = `EXEC USP_GetJobs3 
-                @JobId = :JobId,
+    
+            const sqlQuery = `EXEC USP_GetJobs 
                 @JobStatus = :JobStatus,
                 @CreatedBy = :CreatedBy, 
                 @UserId = :UserId, 
@@ -28,51 +25,50 @@ export class JobService{
                 @FromDate = :FromDate,
                 @ToDate = :ToDate,
                 @InitialLoad = :InitialLoad`;
-
-                const result: any = await MrsDatabase.query(sqlQuery, {
-                    replacements: replacements,
-                    type: QueryTypes.RAW
-                });
     
-               
+            const result = await MrsDatabase.query(sqlQuery, {
+                replacements: replacements,
+                type: QueryTypes.RAW
+            });
     
-                if (!result || !result[0]) {
-                   
-                    return [];
-                }
-    
-                const jobs: Job[] = result[0].map((record: any) => ({
-                    id: record.Id as string,
-                    jobId: record.JobId as number,
-                    assignTo: record.AssignTo as string,
-                    companyId: record.CompanyId as string,
-                    createdBy: record.CreatedBy as string,
-                    createdDateTime: record.CreatedDateTime as Date,
-                    isDeleted: record.IsDeleted as boolean,
-                    isSingleJob: record.IsSingleJob as boolean,
-                    jobFiles: record.JobFiles as string,
-                    l1User: record.L1User as string,
-                    l2User: record.L2User as string,
-                    l3User: record.L3User as string,
-                    modifiedDateTime: record.ModifiedDateTime as Date,
-                    modifyedBy: record.ModifyedBy as string,
-                    name: record.Name as string,
-                    notes: record.Notes as string,
-                    parentJobId: record.ParentJobId as string,
-                    priority: record.Priority as string,
-                    status: record.Status as string,
-                    statusName: record.StatusName as string,
-                    userName: record.UserName as string,
-                    unReadMessages: record.UnReadMessages as number,
-                    filePreference: record.FilePreference as string,
-                    tat: record.Tat as string,
-                }));
-                return jobs;
-            } catch (error) {
-                console.error("Error executing stored procedure:", error);
-                throw new Error(error.message);
+            if (!result || !result[0]) {
+                return [];
             }
+    
+            const jobs = result[0].map(record => ({
+                id: record.Id,
+                jobId: record.JobId,
+                assignTo: record.AssignTo,
+                companyId: record.CompanyId,
+                createdBy: record.CreatedBy,
+                createdDateTime: record.CreatedDateTime,
+                isDeleted: record.IsDeleted,
+                isSingleJob: record.IsSingleJob,
+                jobFiles: record.JobFiles,
+                l1User: record.L1User,
+                l2User: record.L2User,
+                l3User: record.L3User,
+                modifiedDateTime: record.ModifiedDateTime,
+                modifyedBy: record.ModifyedBy,
+                name: record.Name,
+                notes: record.Notes,
+                parentJobId: record.ParentJobId,
+                priority: record.Priority,
+                status: record.Status,
+                statusName: record.StatusName,
+                userName: record.UserName,
+                unReadMessages: record.UnReadMessages,
+                filePreference: record.FilePreference,
+                tat: record.Tat
+            }));
+    
+            return jobs;
+        } catch (error) {
+            console.error("Error executing stored procedure:", error);
+            throw new Error(error.message);
         }
+    }
+    
      
     async deleteJobs(jobId: string, userId: string, status: string){
         try {

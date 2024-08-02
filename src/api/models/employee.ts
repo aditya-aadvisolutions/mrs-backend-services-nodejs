@@ -1,4 +1,5 @@
 export type employeeDto = {
+    isActive: any;
     id:string;
     userId:string;
     clientType:string;
@@ -10,7 +11,7 @@ export type employeeDto = {
     password:string,
     phoneNo:number;
     email:string;
-    RoleName:string;
+    role:string;
     companyId:string;
     companyName:string;
     Details:string;
@@ -27,4 +28,5 @@ export type employeeDto = {
     CreatedDateTime:Date,
     ModifiedDateTime:Date,
     filePreference:string;
+    manager:string
 }
