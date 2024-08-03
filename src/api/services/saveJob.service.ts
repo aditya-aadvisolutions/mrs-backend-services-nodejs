@@ -20,23 +20,23 @@ class SaveJobService {
     return guidRegex.test(value);
   }
 
-  private generatePageCountXml(jobFiles: JobFileType[]): string {
-    const root = xmlbuilder.create('Files');
-    jobFiles.forEach(file => {
-      root.ele('FileInfo', { id: file.fileId, pageCount: file.pageCount });
-    });
-    return root.end({ pretty: true });
-  }
+  // private generatePageCountXml(jobFiles: JobFileType[]): string {
+  //   const root = xmlbuilder.create('Files');
+  //   jobFiles.forEach(file => {
+  //     root.ele('FileInfo', { id: file.fileId, pageCount: file.pageCount });
+  //   });
+  //   return root.end({ pretty: true });
+  // }
 
-  private async updatePageCountsInDatabase(jobFiles: JobFileType[]): Promise<void> {
-    const fileXml = this.generatePageCountXml(jobFiles);
-    const sqlQuery = `EXEC usp_UpdatePageCount @FileXml = :fileXml;`;
+  // private async updatePageCountsInDatabase(jobFiles: JobFileType[]): Promise<void> {
+  //   const fileXml = this.generatePageCountXml(jobFiles);
+  //   const sqlQuery = `EXEC usp_UpdatePageCount @FileXml = :fileXml;`;
 
-    await this.sequelize.query(sqlQuery, {
-      type: QueryTypes.RAW,
-      replacements: { fileXml },
-    });
-  }
+  //   await this.sequelize.query(sqlQuery, {
+  //     type: QueryTypes.RAW,
+  //     replacements: { fileXml },
+  //   });
+  // }
 
   async saveJob(job: JobModal): Promise<boolean> {
     try {
@@ -46,7 +46,7 @@ class SaveJobService {
 
        // Calculate page count for each file
        const tempDir = path.join(__dirname, 'temp');
-       await this.pageCountObj.getPageCountForUploadFiles(job.uploadfiles, tempDir);
+      //  await this.pageCountObj.getPageCountForUploadFiles(job.uploadfiles, tempDir);
 
        
  // Log the page counts for the uploaded files
@@ -90,7 +90,7 @@ class SaveJobService {
         replacements: replacements,
       });
       console.log(result, "result")
-      await this.updatePageCountsInDatabase(job.uploadfiles);
+      // await this.updatePageCountsInDatabase(job.uploadfiles);
 
       return true;
 
