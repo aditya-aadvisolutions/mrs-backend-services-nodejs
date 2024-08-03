@@ -11,41 +11,54 @@ import { generateRefreshToken, generateToken } from '../../utils/jwt';
 
 export class LoginServices{
 
-    async verifyLogin(username: string, password: string): Promise<User | null> {
+    async verifyLogin(username: string, password: string): Promise<{ data: User | null, isSuccess: boolean, message: string | null }> {
         try {
-            const replacements={
+            const replacements = {
                 Username: username,
                 Password: password
-            }
-            
-            const sqlQuery= `exec USP_VerifyLogin 
-            @LoginName = :Username,
-            @Password = :Password `;
-
-            
+            };
+    
+            const sqlQuery = `exec USP_VerifyLogin 
+                @LoginName = :Username,
+                @Password = :Password`;
+    
             const [result] = await MrsDatabase.query(sqlQuery, {
                 replacements: replacements,
                 type: QueryTypes.RAW
             });
-            const record=result[0];
-
-            let authClaims;
-            if(record){
-                 authClaims={
-                    name: record.FirstName +' '+ record.LastName,
-                    email: record.Email,
-                    role: record.RoleName,
-                    jti: new Date().getTime().toString()
+    
+            const record = result[0];
+            if (!record) {
+                console.log("No Data found");
+                return {
+                    data: null,
+                    isSuccess: false,
+                    message: "No data found"
                 };
             }
+    
+            if (record.IsActive === false) {
+                return {
+                    data: null,
+                    isSuccess: false,
+                    message: "Account is inactive. Please contact the admin."
+                };
+            }
+    
+            let authClaims = {
+                name: record.FirstName + ' ' + record.LastName,
+                email: record.Email,
+                role: record.RoleName,
+                jti: new Date().getTime().toString()
+            };
+    
             const token = generateToken(authClaims);
-        const refreshToken =generateRefreshToken();
-        const expiration=process.env.JWT_EXPIRATION;
-            
-            if(result){ 
-                const user: User | null = {
+            const refreshToken = generateRefreshToken();
+            const expiration = process.env.JWT_EXPIRATION;
+    
+            const user: User = {
                 id: record.Id,
-                firstName: record.FIrstName,
+                firstName: record.FirstName,
                 lastName: record.LastName,
                 loginName: record.LoginName,
                 password: null,
@@ -57,23 +70,25 @@ export class LoginServices{
                 token: token,
                 refreshToken: refreshToken,
                 filePreferences: record.FilePreferences,
-                expiration: new Date().getTime()+(60*60*1000)
-                }
-                return user;
-
-            } else {
-                 console.log("No Data found");
-                 
-            }
-            
+                expiration: new Date().getTime() + (60 * 60 * 1000) // example 1 hour expiration
+            };
+    
+            return {
+                data: user,
+                isSuccess: true,
+                message: null
+            };
+    
         } catch (error) {
             console.log(error);
-            throw new Error(error.message)
-            
-        } 
-
-
+            return {
+                data: null,
+                isSuccess: false,
+                message: error.message
+            };
+        }
     }
+    
 
     }
 
