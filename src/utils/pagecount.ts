@@ -2,7 +2,7 @@ import fs from 'fs';
 import axios from 'axios';
 import path from 'path';
 import { promisify } from 'util';
-import { PDFDocument } from 'pdf-lib';
+import { MissingPDFHeaderError, PDFDocument } from 'pdf-lib';
 import mammoth from 'mammoth';
 
 const readFile = promisify(fs.readFile);
@@ -35,9 +35,18 @@ export class PageCount {
   }
 
   async getPdfPageCount(filePath: string): Promise<number> {
-    const data = await readFile(filePath);
-    const pdfDoc = await PDFDocument.load(data);
-    return pdfDoc.getPageCount();
+    try {
+      const data = await readFile(filePath);
+      const pdfDoc = await PDFDocument.load(data);
+      return pdfDoc.getPageCount();
+    }  catch (error) {
+      if (error instanceof MissingPDFHeaderError) {
+        console.error(`Error parsing PDF file: ${error.message}`);
+        return 0; // Set page count to 0 for corrupted PDF files
+      } else {
+        throw error; // Rethrow other errors
+      }
+    }
   }
 
   async getWordPageCount(filePath: string): Promise<number> {
@@ -53,32 +62,38 @@ export class PageCount {
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir);
     }
-
     const tasks = uploadFiles.map(async (file) => {
       const fileInfo = new URL(file.filepath);
       let pageCount = 0;
       const localFilePath = path.join(tempDir, file.filename);
-
       try {
         await this.downloadFile(file.filepath, localFilePath);
 
         if (fileInfo.pathname.endsWith('.pdf')) {
-          pageCount = await this.getPdfPageCount(localFilePath);
+          try {
+            pageCount = await this.getPdfPageCount(localFilePath);
+          } catch (error) {
+            console.error(`Error parsing PDF file: ${error.message}`);
+            pageCount = 0; // Set page count to 0 for corrupted PDF files
+          }
         } else if (fileInfo.pathname.endsWith('.doc') || fileInfo.pathname.endsWith('.docx')) {
           pageCount = await this.getWordPageCount(localFilePath);
         } else {
           console.warn(`Unsupported file type: ${file.filepath}`);
-          return;
         }
-
-        file.pageCount = pageCount; // Add page count to the file object
+      } catch (error) {
+        console.error(`Error processing file ${file.filename}: ${error.message}`);
       } finally {
+        file.pageCount = pageCount; // Add page count to the file object
         // Clean up the downloaded file
-        await unlink(localFilePath);
+        if (fs.existsSync(localFilePath)) {
+          await unlink(localFilePath);
+        }
       }
     });
     await Promise.all(tasks);
   }
+ 
   async getTotalPageCount(uploadFiles: any[], tempDir: string): Promise<number> {
     await this.getPageCountForUploadFiles(uploadFiles, tempDir);
     return uploadFiles.reduce((total, file) => total + (file.pageCount || 0), 0);
