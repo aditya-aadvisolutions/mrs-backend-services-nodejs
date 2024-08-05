@@ -20,23 +20,25 @@ class SaveJobService {
     return guidRegex.test(value);
   }
 
-  // private generatePageCountXml(jobFiles: JobFileType[]): string {
-  //   const root = xmlbuilder.create('Files');
-  //   jobFiles.forEach(file => {
-  //     root.ele('FileInfo', { id: file.fileId, pageCount: file.pageCount });
-  //   });
-  //   return root.end({ pretty: true });
-  // }
+  private generatePageCountXml(jobFiles: JobFileType[]): string {
+    const root = xmlbuilder.create('Files');
+    jobFiles.forEach(file => {
+      root.ele('FileInfo', { id: file.fileId, pageCount: file.pageCount });
+    });
+    return root.end({ pretty: true });
+  }
 
-  // private async updatePageCountsInDatabase(jobFiles: JobFileType[]): Promise<void> {
-  //   const fileXml = this.generatePageCountXml(jobFiles);
-  //   const sqlQuery = `EXEC usp_UpdatePageCount @FileXml = :fileXml;`;
+  private async updatePageCountsInDatabase(jobFiles: JobFileType[]): Promise<void> {
+    
+    const validFiles = jobFiles.filter(file => file.pageCount !== null);
+    const fileXml = this.generatePageCountXml(validFiles);
+    const sqlQuery = `EXEC usp_UpdatePageCount @FileXml = :fileXml;`;
 
-  //   await this.sequelize.query(sqlQuery, {
-  //     type: QueryTypes.RAW,
-  //     replacements: { fileXml },
-  //   });
-  // }
+    await this.sequelize.query(sqlQuery, {
+      type: QueryTypes.RAW,
+      replacements: { fileXml },
+    });
+  }
 
   async saveJob(job: JobModal): Promise<boolean> {
     try {
@@ -45,15 +47,19 @@ class SaveJobService {
       }
 
        // Calculate page count for each file
-       const tempDir = path.join(__dirname, 'temp');
-      //  await this.pageCountObj.getPageCountForUploadFiles(job.uploadfiles, tempDir);
+      const tempDir = path.join(__dirname, 'temp');
+      await this.pageCountObj.getPageCountForUploadFiles(job.uploadfiles, tempDir);
+      job.uploadfiles.forEach(file => {
+        if (file.pageCount === null || file.pageCount === undefined) {
+          file.pageCount = 0;
+        }
+      });
 
-       
- // Log the page counts for the uploaded files
- console.log('Page counts for uploaded files:', job.uploadfiles.map(file => ({
-  fileId: file.fileId,
-  pageCount: file.pageCount
-})));
+      // Log the page counts for the uploaded files
+      console.log('Page counts for uploaded files:', job.uploadfiles.map(file => ({
+        fileId: file.fileId,
+        pageCount: file.pageCount
+      })));
 
 
 
@@ -90,7 +96,7 @@ class SaveJobService {
         replacements: replacements,
       });
       console.log(result, "result")
-      // await this.updatePageCountsInDatabase(job.uploadfiles);
+      await this.updatePageCountsInDatabase(job.uploadfiles);
 
       return true;
 
