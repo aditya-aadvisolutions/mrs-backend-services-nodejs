@@ -16,7 +16,6 @@ const jobService =new JobService();
         export const getJobs = async (req: Request, res: Response) => {
             try {
                 const { userId, jobStatus, createdBy, filename, fromDate, toDate, initialLoad } = req.query;
-                console. log("data from front end",req.query)
                 
                 // Fetch jobs using the job service
                 const jobs = await jobService.getJobs(

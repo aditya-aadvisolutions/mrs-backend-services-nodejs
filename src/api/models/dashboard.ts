@@ -4,4 +4,8 @@ export interface Dashboard <T> {
     CompletedJobsCount: number;
     ClientsCount: Number;
     EmployeesCount: number;
+    InProgressJobsCount: number;
+    VoidJobsCount: number;
+    DuplicateJobsCount: number;
+    DownloadedJobsCount: number;
 }
