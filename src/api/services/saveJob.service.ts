@@ -95,7 +95,6 @@ class SaveJobService {
         type: QueryTypes.RAW,
         replacements: replacements,
       });
-      console.log(result, "result")
       await this.updatePageCountsInDatabase(job.uploadfiles);
 
       return true;
