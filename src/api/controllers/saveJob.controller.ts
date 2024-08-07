@@ -24,5 +24,17 @@ export class SaveJobController {
             res.status(500).json({ isSuccess: false, message: error.message });
         }
     }
-
+    UpdatePageCount = async(req: Request, res: Response): Promise<void> => {
+        try {
+            const {pageCount,jobId} = req.body;
+            const isSuccess = await this.saveJobService.updatePageCount(jobId,pageCount);
+            if (isSuccess) {    
+                res.status(200).json({ isSuccess: true });
+            }else{
+                res.status(400).json({ isSuccess: false, message: 'Failed to update page count.' });
+            }
+        }catch(error) {
+            res.status(500).json({ isSuccess: false, message: error.message });
+        }
+    }
 }
