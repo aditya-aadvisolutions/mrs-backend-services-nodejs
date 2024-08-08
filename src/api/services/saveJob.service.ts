@@ -46,16 +46,16 @@ class SaveJobService {
         throw new Error('Invalid GUID format for Priority, CompanyId, or CreatedBy');
       }
 
-       // Calculate page count for each file
-      const tempDir = path.join(__dirname, 'temp');
-      await this.pageCountObj.getPageCountForUploadFiles(job.uploadfiles, tempDir);
-      job.uploadfiles.forEach(file => {
-        if (file.pageCount === null || file.pageCount === undefined) {
-          file.pageCount = 0;
-        }
-      });
+      //  // Calculate page count for each file
+      // const tempDir = path.join(__dirname, 'temp');
+      // await this.pageCountObj.getPageCountForUploadFiles(job.uploadfiles, tempDir);
+      // job.uploadfiles.forEach(file => {
+      //   if (file.pageCount === null || file.pageCount === undefined) {
+      //     file.pageCount = 0;
+      //   }
+      // });
 
-      // Log the page counts for the uploaded files
+     // Log the page counts for the uploaded files
       console.log('Page counts for uploaded files:', job.uploadfiles.map(file => ({
         fileId: file.fileId,
         pageCount: file.pageCount
