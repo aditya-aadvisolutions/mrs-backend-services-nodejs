@@ -29,11 +29,11 @@ export class LoginServices{
     
             const record = result[0];
             if (!record) {
-                console.log("No Data found");
+                console.log("Invalid Credentials");
                 return {
                     data: null,
                     isSuccess: false,
-                    message: "No data found"
+                    message: "Invalid Credentials"
                 };
             }
     
