@@ -105,6 +105,19 @@ class SaveJobService {
     }
   }
 
+  async updatePageCount(jobId, pageCount): Promise<any> {
+    try {
+      const sqlQuery = `update dbo.JobFiles set PageCount = ${pageCount} where JobId = '${jobId}'`;
+      const result = await this.sequelize.query(sqlQuery, {
+        type: QueryTypes.UPDATE
+      });
+      return true;
+    } catch (error) {
+      throw new Error(error.message);
+      return false;
+    }
+  }
+
   private createTableValuedParameter(jobFiles: JobFileType[], createdBy: string): any[] {
     return jobFiles.map((file) => [
       file.filename,
