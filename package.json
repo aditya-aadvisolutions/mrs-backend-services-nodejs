@@ -23,6 +23,7 @@
     "express-winston": "^4.2.0",
     "graceful-fs": "^4.2.11",
     "mammoth": "^1.8.0",
+    "morgan": "^1.10.0",
     "mssql": "^11.0.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.10.1",
