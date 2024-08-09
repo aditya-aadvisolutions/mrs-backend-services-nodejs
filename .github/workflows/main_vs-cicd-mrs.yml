@@ -59,4 +59,4 @@ jobs:
           app-name: 'vs-cicd-mrs'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C048BBBEDF234DEC8EE3B9D2CD0823C6 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_422D5E4560B046C9AFC464D3F8B48D33 }}
