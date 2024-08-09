@@ -16,12 +16,12 @@ import notification from "./routers/notification.route";
 import userroute from "./routers/users.route";
 import employeerouter from "./routers/employee.route";
 import dashboardroute from "./routers/dashboard.route";
+const morgan = require('morgan');
 
-const winstonExpress = require("express-winston");
-const app=express();
+const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.urlencoded({ extended: true }));
 // var corsOptions = {
 //     origin: MrsConfig.cors.allowedOrigins,
@@ -41,12 +41,14 @@ app.use(upload.none());
 //     next();
 //   });
 const corsOptions = {
-    origin: '*', //'http://localhost:5173/',//(https://your-client-app.com)
-    optionsSuccessStatus: 200,
-  };
- 
-  app.use(cors(corsOptions));
+  origin: '*', //'http://localhost:5173/',//(https://your-client-app.com)
+  optionsSuccessStatus: 200,
+};
 
+app.use(cors(corsOptions));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev')); // You can choose different formats or options
+}
 app.use('/api/Job', jobrouter)
 app.use('/api/s3', multipartrouter);
 app.use('/api/Upload', savejobrouter, adminfileupload)
@@ -55,7 +57,7 @@ app.use('/api/Lookup', statuslookup, userlookup)
 app.use('/api', dashboardroute)
 app.use('/api/Notification', notification)
 app.use('/api/Login', userroute)
-app.use('/api/employee',employeerouter)
+app.use('/api/employee', employeerouter)
 
 
 
