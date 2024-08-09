@@ -29,11 +29,11 @@ export class LoginServices{
     
             const record = result[0];
             if (!record) {
-                console.log("Invalid Credentials");
+                console.log("Invalid Username or Password");
                 return {
                     data: null,
                     isSuccess: false,
-                    message: "Invalid Credentials"
+                    message: "Invalid Username or Password"
                 };
             }
     
