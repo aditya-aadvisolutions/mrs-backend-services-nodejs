@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/04fad00d-503b-47f0-bd44-ddd73da6a624/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/dynamic-mrs-api",
-    "appService.deploySubpath": "."
-}
