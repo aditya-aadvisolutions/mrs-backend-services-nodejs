@@ -15,11 +15,12 @@ const jobService =new JobService();
 
         export const getJobs = async (req: Request, res: Response) => {
             try {
-                const { userId, jobStatus, createdBy, filename, fromDate, toDate, initialLoad } = req.query;
+                const { userId, jobId, jobStatus, createdBy, filename, fromDate, toDate, initialLoad } = req.query;
                 
                 // Fetch jobs using the job service
                 const jobs = await jobService.getJobs(
                     userId as string,
+                    jobId as string,
                     jobStatus as string,
                     createdBy as string,     
                     filename as string,

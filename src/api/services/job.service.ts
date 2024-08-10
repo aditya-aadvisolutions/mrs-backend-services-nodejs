@@ -5,12 +5,13 @@ import MrsDatabase from "../../infra/database/mrs_db_connection";
 
 export class JobService{
     
-    async getJobs(userId, jobStatus = null, createdBy = null, filename = null, fromDate = null, toDate = null, initialLoad = false) {
+    async getJobs(userId,jobId = null, jobStatus = null, createdBy = null, filename = null, fromDate = null, toDate = null, initialLoad = false) {        
         try {
             const replacements = {
                 JobStatus: jobStatus === '' ? null : jobStatus,
                 CreatedBy: createdBy === '' ? null : createdBy,
                 UserId: userId,
+                JobId: jobId === '' ? null : jobId,
                 Filename: filename === '' ? null : filename,
                 FromDate: fromDate === '' ? null : fromDate,
                 ToDate: toDate === '' ? null : toDate,
@@ -20,6 +21,7 @@ export class JobService{
             const sqlQuery = `EXEC USP_GetJobs 
                 @JobStatus = :JobStatus,
                 @CreatedBy = :CreatedBy, 
+                @JobId = :JobId,
                 @UserId = :UserId, 
                 @Filename = :Filename, 
                 @FromDate = :FromDate,
