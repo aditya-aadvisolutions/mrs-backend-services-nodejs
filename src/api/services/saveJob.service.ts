@@ -42,7 +42,7 @@ class SaveJobService {
 
   async saveJob(job: JobModal): Promise<boolean> {
     try {
-      if (!this.isValidGuid(job.tat!) || !this.isValidGuid(job.companyId!) || !this.isValidGuid(job.createdBy!)) {
+      if (!this.isValidGuid(job.tat!) || !this.isValidGuid(job.createdBy!)) {
         throw new Error('Invalid GUID format for Priority, CompanyId, or CreatedBy');
       }
 
@@ -87,7 +87,7 @@ class SaveJobService {
         job.tat,
         job.comment,
         job.uploadtype,
-        job.companyId,
+        job.companyId ==""?null:job.companyId,
         job.createdBy
       ];
 

@@ -34,7 +34,7 @@ export const Users = MrsDatabase.define('Users', {
   },
   CompanyId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: true
   },
   IsDisabled: {
       type: DataTypes.BOOLEAN,

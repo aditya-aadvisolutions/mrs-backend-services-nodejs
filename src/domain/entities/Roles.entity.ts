@@ -11,7 +11,8 @@ export const Roles = MrsDatabase.define('Roles', {
         type: DataTypes.STRING
     },
     CompanyId: {
-        type: DataTypes.UUID
+        type: DataTypes.UUID,
+        allowNull: true
     },
     Type: {
         type: DataTypes.STRING

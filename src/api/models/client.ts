@@ -11,7 +11,7 @@ export type clientDto = {
     phoneNo:number;
     email:string;
     RoleName:string;
-    companyId:string;
+    companyId:string | null;
     companyName:string;
     Details:string;
     Website:string;

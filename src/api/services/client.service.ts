@@ -50,7 +50,6 @@ export class ClientService {
             if (clientDto.filePreference.includes('.pdflnk')) {
                 FilePreferencePDFLink = true;
             }
-            const companyId = literal(`'${clientDto.companyId}'`);
             const createdBy = literal(`'${clientDto.createdBy}'`);
 
             const createdDateTime = moment().toDate(); // Pass Date object
@@ -68,7 +67,7 @@ export class ClientService {
                 Password: hashedPassword, 
                 Email: clientDto.email,
                 PhoneNo: clientDto.phoneNo,
-                CompanyId: companyId,
+                CompanyId: clientDto.companyId === ''?null:clientDto.companyId,
                 CreatedBy: createdBy,
             }, { transaction: dbtrans });
 

@@ -2,7 +2,6 @@ import {Request, Response, Router} from 'express'
 import { LoginServices } from '../services/loginservices';
 
 import { ApiResult } from '../models/apiResult';
-import jwt, {JwtPayLoad, Secret} from 'jsonwebtoken';
 import crypto from 'crypto';
 import {User} from '../models/user';
 import AesEncryption from '../../utils/aesencryption'
