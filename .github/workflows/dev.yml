@@ -60,3 +60,6 @@ jobs:
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_MRSDEV }}
+
+      - name: Configure Environment Variables
+        run: az webapp config appsettings set --resource-group MRS-DEV --name mrs-api-dev --settings DB_HOST=${{ secrets.DB_HOST }} DB_NAME=${{ secrets.DB_NAME }} AWS_REGION=${{ secrets.AWS_REGION }} DB_UNAME=${{ secrets.DB_UNAME }} DB_PWD=${{ secrets.DB_PWD }}
