@@ -4,12 +4,10 @@
   "description": "migrating to node js",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && nodemon dist/index.js",
-    "dev": "npm run transpile:dev && npm run build:dev",
-    "build": "tsc --build",
-    "watch:dev": "nodemon",
-    "transpile:dev": "tsc",
-    "build:dev": "node dist/index.js"
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "watch:dev": "nodemon"
   },
   "author": "aadvitech solutions",
   "license": "ISC",
@@ -35,11 +33,14 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.14.8",
+    "@types/node": "^20.2.1",
+    "@types/express": "^4.17.17",
+    "typescript": "^5.2.2",
     "@types/sequelize": "^4.28.20",
+    "@types/jsonwebtoken":"9.0.6",
+    "@types/multer":"^1.4.11",
+    "@types/mssql":"^9.1.5",
     "nodemon": "^3.1.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+    "ts-node": "^10.9.2"
   }
 }
